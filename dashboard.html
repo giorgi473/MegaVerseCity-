@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>მთავარი გვერდი</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(
+          135deg,
+          #1a202c 0%,
+          #2d3748 100%
+        ); /* იგივე ფონური ფერები, რაც შესვლის გვერდზე */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #e2e8f0;
+        padding: 20px;
+      }
+      .header {
+        width: 100%;
+        max-width: 800px;
+        background: rgba(26, 32, 44, 0.7); /* გამჭვირვალე ფონი */
+        backdrop-filter: blur(10px); /* ბლარი ეფექტი */
+        border-radius: 12px;
+        padding: 20px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 40px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .header h1 {
+        font-size: 28px;
+        color: #4fd1c5; /* აქცენტის ფერი */
+        margin: 0;
+      }
+      .user-info {
+        font-size: 18px;
+        font-weight: 600;
+        color: #81e6d9; /* მეორე აქცენტის ფერი */
+      }
+      .logout-btn {
+        padding: 10px 20px;
+        background: linear-gradient(
+          135deg,
+          #fc8181 0%,
+          #f6ad55 100%
+        ); /* წითელი/ნარინჯისფერი გრადიენტი */
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+      .logout-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      }
+      .welcome-message {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          flex-direction: column;
+          text-align: center;
+          gap: 15px;
+          padding: 15px 20px;
+        }
+        .header h1 {
+          font-size: 24px;
+        }
+        .user-info {
+          font-size: 16px;
+        }
+        .logout-btn {
+          width: 100%;
+        }
+        .welcome-message {
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>კეთილი იყოს მობრძანება!</h1>
+      <div class="user-info" id="userInfo"></div>
+      <button class="logout-btn" onclick="logout()">გასვლა</button>
+    </div>
+    <div class="welcome-message">
+      <p>თქვენ წარმატებით შეხვედით სისტემაში.</p>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const userInfoElement = document.getElementById("userInfo");
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+        if (loggedInUser && loggedInUser.name) {
+          userInfoElement.textContent = loggedInUser.name;
+        } else {
+          // თუ მომხმარებელი არ არის შესული, გადამისამართება შესვლის გვერდზე
+          window.location.href = "index.html"; // თქვენი შესვლის გვერდის ფაილის სახელი
+        }
+      });
+
+      function logout() {
+        localStorage.removeItem("loggedInUser"); // წაშლა localStorage-დან
+        window.location.href = "index.html"; // გადამისამართება შესვლის გვერდზე
+      }
+    </script>
+  </body>
+</html>
