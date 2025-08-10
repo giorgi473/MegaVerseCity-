@@ -577,6 +577,21 @@
       .password-strength-indicator.show {
         display: block;
       }
+      .back-to-login {
+        text-align: center;
+        margin-top: 12px;
+      }
+      .back-to-login a {
+        color: var(--accent-color-1);
+        text-decoration: none;
+        font-size: 12px;
+        transition: color 0.3s ease;
+        font-weight: 500;
+      }
+      .back-to-login a:hover {
+        color: var(--accent-color-2);
+        text-decoration: underline;
+      }
       @media (max-width: 1024px) {
         body {
           padding: 8px;
@@ -796,7 +811,7 @@
                 <div class="success-message" id="loginSuccess"></div>
               </form>
               <div class="forgot-password">
-                <a href="#" onclick="showForgotPassword()"
+                <a href="#" onclick="switchForm('forgotPassword', this)"
                   >დაგავიწყდათ პაროლი?</a
                 >
               </div>
@@ -927,17 +942,146 @@
                 <div class="success-message" id="registerSuccess"></div>
               </form>
             </div>
+            <div class="form-section" id="forgotPasswordForm">
+              <form onsubmit="handleForgotPassword(event)">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-input"
+                    id="resetEmail"
+                    placeholder="ელ. ფოსტა"
+                    required
+                    oninput="debouncedValidateField(this, 'resetEmailError')"
+                  />
+                  <div class="error-message" id="resetEmailError"></div>
+                </div>
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <input
+                      type="password"
+                      class="form-input"
+                      id="resetPassword"
+                      placeholder="ახალი პაროლი"
+                      required
+                      oninput="debouncedValidateRegisterPassword(this, 'resetPasswordError')"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle"
+                      onclick="togglePasswordVisibility('resetPassword', this)"
+                    >
+                      <svg
+                        class="icon eye-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M2.06 12.06a12.06 12.06 0 0 1 20.06 0M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                        />
+                        <path d="M12 12.01V12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="error-message" id="resetPasswordError"></div>
+                  <div
+                    class="password-strength-indicator"
+                    id="resetPasswordStrengthIndicator"
+                  >
+                    <div class="strength-bar" id="resetStrengthBar"></div>
+                    <span class="strength-text" id="resetStrengthText"></span>
+                  </div>
+                  <div
+                    class="password-requirements"
+                    id="resetPasswordRequirements"
+                  >
+                    <div>
+                      <span class="icon" id="resetReqLength">✖</span>
+                      <span>მინიმუმ 6 სიმბოლო</span>
+                    </div>
+                    <div>
+                      <span class="icon" id="resetReqUppercase">✖</span>
+                      <span>მინიმუმ ერთი დიდი ასო</span>
+                    </div>
+                    <div>
+                      <span class="icon" id="resetReqLowercase">✖</span>
+                      <span>მინიმუმ ერთი პატარა ასო</span>
+                    </div>
+                    <div>
+                      <span class="icon" id="resetReqNumber">✖</span>
+                      <span>მინიმუმ ერთი ციფრი</span>
+                    </div>
+                    <div>
+                      <span class="icon" id="resetReqSpecial">✖</span>
+                      <span>მინიმუმ ერთი სპეციალური სიმბოლო</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-with-icon">
+                    <input
+                      type="password"
+                      class="form-input"
+                      id="resetConfirmPassword"
+                      placeholder="გაიმეორეთ ახალი პაროლი"
+                      required
+                      oninput="debouncedValidateField(this, 'resetConfirmError')"
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle"
+                      onclick="togglePasswordVisibility('resetConfirmPassword', this)"
+                    >
+                      <svg
+                        class="icon eye-icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path
+                          d="M2.06 12.06a12.06 12.06 0 0 1 20.06 0M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"
+                        />
+                        <path d="M12 12.01V12" />
+                      </svg>
+                    </button>
+                  </div>
+                  <div class="error-message" id="resetConfirmError"></div>
+                </div>
+                <button type="submit" class="submit-btn">
+                  <span class="btn-text">პაროლის შეცვლა</span>
+                  <div class="loading" id="resetLoading"></div>
+                </button>
+                <div class="success-message" id="resetSuccess"></div>
+              </form>
+              <div class="back-to-login">
+                <a href="#" onclick="switchForm('login', this)"
+                  >უკან შესვლაზე</a
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <script>
+      // Check if user is already logged in
+      document.addEventListener("DOMContentLoaded", function () {
+        const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+        if (loggedInUser) {
+          window.location.href = "dashboard.html";
+        }
+      });
+
       // მომხმარებლების მასივის ინიციალიზაცია localStorage-დან
       let users = JSON.parse(localStorage.getItem("registeredUsers")) || [];
 
       // --- ნებადართული ელ. ფოსტების სია ---
-      // მხოლოდ ამ სიაში არსებული ელ. ფოსტის მისამართებით არის შესაძლებელი რეგისტრაცია.
-      // შეგიძლიათ შეცვალოთ ეს სია თქვენი საჭიროებების მიხედვით.
       const allowedEmails = [
         "user1@example.com",
         "admin@example.com",
@@ -948,26 +1092,44 @@
       function switchForm(formType, clickedButton) {
         const loginForm = document.getElementById("loginForm");
         const registerForm = document.getElementById("registerForm");
+        const forgotPasswordForm =
+          document.getElementById("forgotPasswordForm");
         const toggleSlider = document.getElementById("toggleSlider");
         const toggleBtns = document.querySelectorAll(".toggle-btn");
         clearAllErrors();
         clearAllInputValidationStates();
         updatePasswordStrengthIndicator("");
         updatePasswordRequirements("");
+        updatePasswordStrengthIndicator("", "reset");
+        updatePasswordRequirements("", "reset");
         document.getElementById("loginSuccess").style.display = "none";
         document.getElementById("registerSuccess").style.display = "none";
+        document.getElementById("resetSuccess").style.display = "none";
+
         if (formType === "login") {
           loginForm.classList.add("active");
           registerForm.classList.remove("active");
+          forgotPasswordForm.classList.remove("active");
           toggleSlider.classList.remove("register");
-        } else {
+          toggleBtns.forEach((btn) => btn.classList.remove("active"));
+          toggleBtns[0].classList.add("active");
+        } else if (formType === "register") {
           registerForm.classList.add("active");
           loginForm.classList.remove("active");
+          forgotPasswordForm.classList.remove("active");
           toggleSlider.classList.add("register");
+          toggleBtns.forEach((btn) => btn.classList.remove("active"));
+          toggleBtns[1].classList.add("active");
+        } else if (formType === "forgotPassword") {
+          forgotPasswordForm.classList.add("active");
+          loginForm.classList.remove("active");
+          registerForm.classList.remove("active");
+          toggleSlider.classList.remove("register");
+          toggleBtns.forEach((btn) => btn.classList.remove("active"));
+          toggleBtns[0].classList.add("active");
         }
-        toggleBtns.forEach((btn) => btn.classList.remove("active"));
-        clickedButton.classList.add("active");
       }
+
       function debounce(func, delay) {
         let timeout;
         return function (...args) {
@@ -976,16 +1138,29 @@
           timeout = setTimeout(() => func.apply(context, args), delay);
         };
       }
+
       function validateField(inputElement, errorElementId) {
         const value = inputElement.value;
         let errorMessage = "";
         inputElement.classList.remove("invalid", "valid");
         if (value.trim() === "") {
           clearSpecificError(errorElementId);
-          if (inputElement.id === "registerPassword") {
-            updatePasswordStrengthIndicator("");
-            updatePasswordRequirements("");
-          } else if (inputElement.id === "registerConfirmPassword") {
+          if (
+            inputElement.id === "registerPassword" ||
+            inputElement.id === "resetPassword"
+          ) {
+            updatePasswordStrengthIndicator(
+              "",
+              inputElement.id.startsWith("reset") ? "reset" : ""
+            );
+            updatePasswordRequirements(
+              "",
+              inputElement.id.startsWith("reset") ? "reset" : ""
+            );
+          } else if (
+            inputElement.id === "registerConfirmPassword" ||
+            inputElement.id === "resetConfirmPassword"
+          ) {
             inputElement.classList.remove("invalid", "valid");
           }
           return;
@@ -998,7 +1173,10 @@
           inputElement.type === "password" ||
           inputElement.type === "text"
         ) {
-          if (inputElement.id === "registerPassword") {
+          if (
+            inputElement.id === "registerPassword" ||
+            inputElement.id === "resetPassword"
+          ) {
             const requirements = {
               length: value.length >= 6,
               uppercase: /[A-Z]/.test(value),
@@ -1006,7 +1184,10 @@
               number: /[0-9]/.test(value),
               special: /[!@#$%^&*(),.?":{}|<>]/.test(value),
             };
-            updatePasswordRequirements(value);
+            updatePasswordRequirements(
+              value,
+              inputElement.id.startsWith("reset") ? "reset" : ""
+            );
             if (!requirements.length) {
               errorMessage = "პაროლი უნდა შეიცავდეს მინიმუმ 6 სიმბოლოს";
             } else if (!requirements.uppercase) {
@@ -1028,6 +1209,11 @@
             if (value !== passwordInput.value) {
               errorMessage = "პაროლები არ ემთხვევა";
             }
+          } else if (inputElement.id === "resetConfirmPassword") {
+            const passwordInput = document.getElementById("resetPassword");
+            if (value !== passwordInput.value) {
+              errorMessage = "პაროლები არ ემთხვევა";
+            }
           }
         } else if (
           inputElement.type === "text" &&
@@ -1045,20 +1231,29 @@
           inputElement.classList.add("valid");
         }
       }
+
       const debouncedValidateField = debounce(
         (inputElement, errorElementId) => {
           validateField(inputElement, errorElementId);
         },
         300
       );
+
       const debouncedValidateRegisterPassword = debounce(
         (inputElement, errorElementId) => {
           validateField(inputElement, errorElementId);
-          updatePasswordStrengthIndicator(inputElement.value);
-          updatePasswordRequirements(inputElement.value);
+          updatePasswordStrengthIndicator(
+            inputElement.value,
+            inputElement.id.startsWith("reset") ? "reset" : ""
+          );
+          updatePasswordRequirements(
+            inputElement.value,
+            inputElement.id.startsWith("reset") ? "reset" : ""
+          );
         },
         300
       );
+
       function checkPasswordStrength(password) {
         let score = 0;
         if (password.length > 0) {
@@ -1080,11 +1275,12 @@
         }
         return score;
       }
-      function updatePasswordStrengthIndicator(password) {
-        const strengthBar = document.getElementById("strengthBar");
-        const strengthText = document.getElementById("strengthText");
+
+      function updatePasswordStrengthIndicator(password, prefix = "") {
+        const strengthBar = document.getElementById(`${prefix}strengthBar`);
+        const strengthText = document.getElementById(`${prefix}strengthText`);
         const strengthIndicator = document.getElementById(
-          "passwordStrengthIndicator"
+          `${prefix}passwordStrengthIndicator`
         );
         if (!strengthBar || !strengthText || !strengthIndicator) return;
         if (password.length > 0) {
@@ -1128,14 +1324,15 @@
           strengthText.classList.add(className);
         }
       }
-      function updatePasswordRequirements(password) {
-        const reqLength = document.getElementById("reqLength");
-        const reqUppercase = document.getElementById("reqUppercase");
-        const reqLowercase = document.getElementById("reqLowercase");
-        const reqNumber = document.getElementById("reqNumber");
-        const reqSpecial = document.getElementById("reqSpecial");
-        const requirementsContainer = document.querySelector(
-          ".password-requirements"
+
+      function updatePasswordRequirements(password, prefix = "") {
+        const reqLength = document.getElementById(`${prefix}reqLength`);
+        const reqUppercase = document.getElementById(`${prefix}reqUppercase`);
+        const reqLowercase = document.getElementById(`${prefix}reqLowercase`);
+        const reqNumber = document.getElementById(`${prefix}reqNumber`);
+        const reqSpecial = document.getElementById(`${prefix}reqSpecial`);
+        const requirementsContainer = document.getElementById(
+          `${prefix}passwordRequirements`
         );
         if (
           !reqLength ||
@@ -1174,6 +1371,7 @@
         updateRequirement(reqNumber, checks.number);
         updateRequirement(reqSpecial, checks.special);
       }
+
       function togglePasswordVisibility(inputId, buttonElement) {
         const input = document.getElementById(inputId);
         const icon = buttonElement.querySelector(".icon");
@@ -1187,6 +1385,7 @@
             '<path d="M2.06 12.06a12.06 12.06 0 0 1 20.06 0M12 17a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/><path d="M12 12.01V12"/>';
         }
       }
+
       function handleLogin(event) {
         event.preventDefault();
         const form = event.target;
@@ -1219,7 +1418,6 @@
           btnText.style.display = "block";
           const email = emailInput.value;
           const password = passwordInput.value;
-          // მომხმარებლის მოძიება შენახულ მომხმარებლებში
           const user = users.find(
             (u) => u.email === email && u.password === password
           );
@@ -1227,13 +1425,12 @@
             successMsg.textContent = "წარმატებით შეხვედით სისტემაში!";
             successMsg.style.display = "block";
             successMsg.classList.add("show");
-            // მომხმარებლის მონაცემების შენახვა localStorage-ში
             localStorage.setItem(
               "loggedInUser",
               JSON.stringify({ name: user.name, email: user.email })
             );
             setTimeout(() => {
-              window.location.href = "dashboard.html"; // გადასვლა dashboard.html-ზე
+              window.location.href = "dashboard.html";
             }, 1000);
             form.reset();
             clearAllInputValidationStates();
@@ -1244,6 +1441,7 @@
           }
         }, 2000);
       }
+
       function handleRegister(event) {
         event.preventDefault();
         const form = event.target;
@@ -1256,18 +1454,12 @@
         const loading = document.getElementById("registerLoading");
         const btnText = form.querySelector(".btn-text");
         const successMsg = document.getElementById("registerSuccess");
-
-        // 1. ყველა შეცდომის გასუფთავება და ვალიდაციის მდგომარეობის გადატვირთვა
         clearAllErrors();
         successMsg.style.display = "none";
-
-        // 2. ველების ვალიდაცია
         validateField(nameInput, "registerNameError");
         validateField(emailInput, "registerEmailError");
         validateField(passwordInput, "registerPasswordError");
         validateField(confirmPasswordInput, "registerConfirmError");
-
-        // 3. შემოწმება, არის თუ არა რომელიმე ველი არასწორი ან ცარიელი
         const allInputs = form.querySelectorAll(".form-input");
         let isValid = true;
         allInputs.forEach((input) => {
@@ -1278,54 +1470,37 @@
             isValid = false;
           }
         });
-
-        // თუ რომელიმე ველი არასწორია, შეაჩერე რეგისტრაცია
         if (!isValid) {
           return;
         }
-
-        // 4. ჩატვირთვის ინდიკატორის ჩვენება
         loading.style.display = "block";
         btnText.style.display = "none";
-
         setTimeout(() => {
           loading.style.display = "none";
           btnText.style.display = "block";
-
           const name = nameInput.value;
           const email = emailInput.value;
           const password = passwordInput.value;
-
-          // 5. შემოწმება, არის თუ არა ელ. ფოსტა ნებადართულ სიაში
-          // შემოწმება, არის თუ არა ელ. ფოსტა ნებადართულ დომენში (მაგ. @mail.ru)
-          // ან არის თუ არა ზუსტად ნებადართულ სიაში
           const isMailRuDomain = email.endsWith("@mail.ru");
           const isExactlyAllowed = allowedEmails.includes(email);
-
           if (!isMailRuDomain && !isExactlyAllowed) {
             showError(
               "registerEmailError",
-              "ეს ელ. ფოსტა არ არის ნებადართული რეგისტრაციისთვის! (მხოლოდ @mail.ru ან წინასწარ განსაზღვრული მისამართები)"
+              "ეს ელ. ფოსტა არ არის ნებადართული რეგისტრაციისთვის!"
             );
             emailInput.classList.add("invalid");
-            return; // შეაჩერე რეგისტრაცია
+            return;
           }
-
-          // 6. შემოწმება, არსებობს თუ არა უკვე ასეთი ელ. ფოსტა
           if (users.some((u) => u.email === email)) {
             showError(
               "registerEmailError",
               "ეს ელ. ფოსტა უკვე რეგისტრირებულია!"
             );
             emailInput.classList.add("invalid");
-            return; // შეაჩერე რეგისტრაცია
+            return;
           }
-
-          // 7. მომხმარებლის დამატება და შენახვა
           users.push({ name, email, password });
           localStorage.setItem("registeredUsers", JSON.stringify(users));
-
-          // 8. წარმატების შეტყობინების ჩვენება და ფორმის გასუფთავება
           successMsg.textContent = "რეგისტრაცია წარმატებით დასრულდა!";
           successMsg.style.display = "block";
           successMsg.classList.add("show");
@@ -1333,26 +1508,95 @@
           clearAllInputValidationStates();
           updatePasswordStrengthIndicator("");
           updatePasswordRequirements("");
-
-          // 9. შესვლის ფორმაზე გადასვლა
+          // Auto-switch to login form after successful registration
           setTimeout(() => {
             switchForm(
               "login",
               document.querySelector(".toggle-btn:first-child")
             );
+            // Pre-fill login form with registered credentials
+            document.getElementById("loginEmail").value = email;
+            document.getElementById("loginPassword").value = password;
           }, 1500);
         }, 2000);
       }
+
+      function handleForgotPassword(event) {
+        event.preventDefault();
+        const form = event.target;
+        const emailInput = document.getElementById("resetEmail");
+        const passwordInput = document.getElementById("resetPassword");
+        const confirmPasswordInput = document.getElementById(
+          "resetConfirmPassword"
+        );
+        const loading = document.getElementById("resetLoading");
+        const btnText = form.querySelector(".btn-text");
+        const successMsg = document.getElementById("resetSuccess");
+        clearAllErrors();
+        successMsg.style.display = "none";
+        validateField(emailInput, "resetEmailError");
+        validateField(passwordInput, "resetPasswordError");
+        validateField(confirmPasswordInput, "resetConfirmError");
+        const allInputs = form.querySelectorAll(".form-input");
+        let isValid = true;
+        allInputs.forEach((input) => {
+          if (
+            input.classList.contains("invalid") ||
+            input.value.trim() === ""
+          ) {
+            isValid = false;
+          }
+        });
+        if (!isValid) {
+          return;
+        }
+        loading.style.display = "block";
+        btnText.style.display = "none";
+        setTimeout(() => {
+          loading.style.display = "none";
+          btnText.style.display = "block";
+          const email = emailInput.value;
+          const newPassword = passwordInput.value;
+          const userIndex = users.findIndex((u) => u.email === email);
+          if (userIndex !== -1) {
+            users[userIndex].password = newPassword;
+            localStorage.setItem("registeredUsers", JSON.stringify(users));
+            successMsg.textContent = "პაროლი წარმატებით შეიცვალა!";
+            successMsg.style.display = "block";
+            successMsg.classList.add("show");
+            form.reset();
+            clearAllInputValidationStates();
+            updatePasswordStrengthIndicator("", "reset");
+            updatePasswordRequirements("", "reset");
+            setTimeout(() => {
+              switchForm(
+                "login",
+                document.querySelector(".toggle-btn:first-child")
+              );
+              document.getElementById("loginEmail").value = email;
+            }, 1500);
+          } else {
+            showError(
+              "resetEmailError",
+              "ეს ელ. ფოსტა არ არის რეგისტრირებული!"
+            );
+            emailInput.classList.add("invalid");
+          }
+        }, 2000);
+      }
+
       function validateEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
       }
+
       function showError(elementId, message) {
         const errorElement = document.getElementById(elementId);
         errorElement.textContent = message;
         errorElement.style.display = "block";
         errorElement.classList.add("show");
       }
+
       function clearSpecificError(elementId) {
         const errorElement = document.getElementById(elementId);
         if (errorElement) {
@@ -1361,6 +1605,7 @@
           errorElement.classList.remove("show");
         }
       }
+
       function clearAllErrors() {
         const errorElements = document.querySelectorAll(".error-message");
         errorElements.forEach((element) => {
@@ -1369,15 +1614,14 @@
           element.classList.remove("show");
         });
       }
+
       function clearAllInputValidationStates() {
         const inputs = document.querySelectorAll(".form-input");
         inputs.forEach((input) => {
           input.classList.remove("invalid", "valid");
         });
       }
-      function showForgotPassword() {
-        alert("პაროლის აღდგენის ლინკი გამოგზავნილია თქვენს ელ. ფოსტაზე!");
-      }
+
       const canvas = document.getElementById("particleCanvas");
       const ctx = canvas.getContext("2d");
       let particles = [];
@@ -1386,6 +1630,7 @@
         y: null,
         radius: 120,
       };
+
       function setCanvasSize() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -1400,6 +1645,7 @@
         mouse.x = null;
         mouse.y = null;
       });
+
       const styleComputed = getComputedStyle(document.body);
       const accentColor1 = styleComputed
         .getPropertyValue("--accent-color-1")
@@ -1407,7 +1653,7 @@
       const accentColor2 = styleComputed
         .getPropertyValue("--accent-color-2")
         .trim();
-      // ფერების RGB მნიშვნელობების წინასწარი გამოთვლა
+
       function hexToRgb(hex) {
         const bigint = parseInt(hex.slice(1), 16);
         const r = (bigint >> 16) & 255;
@@ -1415,8 +1661,10 @@
         const b = bigint & 255;
         return { r, g, b };
       }
+
       const rgbAccentColor1 = hexToRgb(accentColor1);
       const rgbAccentColor2 = hexToRgb(accentColor2);
+
       class Particle {
         constructor(x, y, color, size, speedX, speedY) {
           this.x = x;
@@ -1428,7 +1676,7 @@
           this.baseSpeedX = speedX;
           this.baseSpeedY = speedY;
           this.color = color;
-          this.opacity = Math.random() * 0.4 + 0.2; // გამჭვირვალობის დიაპაზონი
+          this.opacity = Math.random() * 0.4 + 0.2;
         }
         update() {
           if (mouse.x && mouse.y) {
@@ -1477,29 +1725,31 @@
           const rgb = hexToRgb(this.color);
           ctx.fillStyle = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${this.opacity})`;
           ctx.fill();
-          ctx.shadowBlur = this.size * 2; // გლოუ ეფექტის შემცირება
+          ctx.shadowBlur = this.size * 2;
           ctx.shadowColor = this.color;
           ctx.shadowOffsetX = 0;
           ctx.shadowOffsetY = 0;
         }
       }
+
       function initParticles() {
         particles = [];
-        const particleCount = 80; // ნაწილაკების რაოდენობის შემცირება
+        const particleCount = 80;
         const colors = [accentColor1, accentColor2, "#e2e8f0", "#ffffff"];
         for (let i = 0; i < particleCount; i++) {
           const x = Math.random() * canvas.width;
           const y = Math.random() * canvas.height;
-          const size = Math.random() * 1.2 + 0.5; // ზომის დიაპაზონი
-          const speedX = Math.random() * 0.4 - 0.2; // სიჩქარის შემცირება
-          const speedY = Math.random() * 0.4 - 0.2; // სიჩქარის შემცირება
+          const size = Math.random() * 1.2 + 0.5;
+          const speedX = Math.random() * 0.4 - 0.2;
+          const speedY = Math.random() * 0.4 - 0.2;
           const color = colors[Math.floor(Math.random() * colors.length)];
           particles.push(new Particle(x, y, color, size, speedX, speedY));
         }
       }
+
       function connectParticles() {
-        const maxDistance = 100; // კავშირის მანძილის შემცირება
-        const mouseConnectDistance = 150; // მაუსთან კავშირის მანძილის შემცირება
+        const maxDistance = 100;
+        const mouseConnectDistance = 150;
         for (let a = 0; a < particles.length; a++) {
           for (let b = a; b < particles.length; b++) {
             const dist = Math.sqrt(
@@ -1510,7 +1760,7 @@
               ctx.strokeStyle = `rgba(${rgbAccentColor1.r}, ${
                 rgbAccentColor1.g
               }, ${rgbAccentColor1.b}, ${0.6 - dist / maxDistance})`;
-              ctx.lineWidth = 0.1 + (1 - dist / maxDistance) * 0.4; // ხაზის სისქის დინამიური ცვლილება
+              ctx.lineWidth = 0.1 + (1 - dist / maxDistance) * 0.4;
               ctx.beginPath();
               ctx.moveTo(particles[a].x, particles[a].y);
               ctx.lineTo(particles[b].x, particles[b].y);
@@ -1536,6 +1786,7 @@
           }
         }
       }
+
       function animateParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.shadowBlur = 0;
@@ -1547,8 +1798,10 @@
         connectParticles();
         requestAnimationFrame(animateParticles);
       }
+
       initParticles();
       animateParticles();
+
       document.addEventListener("DOMContentLoaded", function () {
         const buttons = document.querySelectorAll(".submit-btn, .toggle-btn");
         buttons.forEach((button) => {
@@ -1578,6 +1831,7 @@
           });
         });
       });
+
       const styleElement = document.createElement("style");
       styleElement.textContent = `
         @keyframes ripple {

@@ -5,52 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>მთავარი გვერდი</title>
     <style>
+      :root {
+        --primary-bg-color: #1a202c;
+        --secondary-bg-color: #2d3748;
+        --accent-color-1: #4fd1c5;
+        --accent-color-2: #81e6d9;
+        --card-bg: rgba(26, 32, 44, 0.5);
+        --border-color: rgba(255, 255, 255, 0.15);
+        --light-text-color: #e2e8f0;
+      }
       body {
         font-family: "Inter", sans-serif;
         background: linear-gradient(
           135deg,
-          #1a202c 0%,
-          #2d3748 100%
-        ); /* იგივე ფონური ფერები, რაც შესვლის გვერდზე */
+          var(--primary-bg-color) 0%,
+          var(--secondary-bg-color) 100%
+        );
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        color: #e2e8f0;
+        justify-content: flex-start;
+        color: var(--light-text-color);
         padding: 20px;
       }
       .header {
         width: 100%;
-        max-width: 800px;
-        background: rgba(26, 32, 44, 0.7); /* გამჭვირვალე ფონი */
-        backdrop-filter: blur(10px); /* ბლარი ეფექტი */
+        max-width: 1200px;
+        background: var(--card-bg);
+        backdrop-filter: blur(10px);
         border-radius: 12px;
-        padding: 20px 30px;
+        padding: 15px 30px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 40px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--border-color);
       }
-      .header h1 {
-        font-size: 28px;
-        color: #4fd1c5; /* აქცენტის ფერი */
-        margin: 0;
+      .logo-container {
+        display: flex;
+        align-items: center;
+      }
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+      }
+      .header-title {
+        font-size: 24px;
+        color: var(--accent-color-1);
+        font-weight: 600;
       }
       .user-info {
         font-size: 18px;
         font-weight: 600;
-        color: #81e6d9; /* მეორე აქცენტის ფერი */
+        color: var(--accent-color-2);
       }
       .logout-btn {
         padding: 10px 20px;
-        background: linear-gradient(
-          135deg,
-          #fc8181 0%,
-          #f6ad55 100%
-        ); /* წითელი/ნარინჯისფერი გრადიენტი */
+        background: linear-gradient(135deg, #fc8181 0%, #f6ad55 100%);
         color: white;
         border: none;
         border-radius: 8px;
@@ -59,6 +73,7 @@
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin-left: 20px;
       }
       .logout-btn:hover {
         transform: translateY(-2px);
@@ -68,8 +83,8 @@
         font-size: 24px;
         text-align: center;
         margin-top: 20px;
+        color: var(--light-text-color);
       }
-
       @media (max-width: 768px) {
         .header {
           flex-direction: column;
@@ -77,14 +92,18 @@
           gap: 15px;
           padding: 15px 20px;
         }
-        .header h1 {
-          font-size: 24px;
+        .logo-container {
+          justify-content: center;
+        }
+        .header-title {
+          font-size: 20px;
         }
         .user-info {
           font-size: 16px;
         }
         .logout-btn {
           width: 100%;
+          margin-left: 0;
         }
         .welcome-message {
           font-size: 20px;
@@ -94,9 +113,14 @@
   </head>
   <body>
     <div class="header">
-      <h1>კეთილი იყოს მობრძანება!</h1>
-      <div class="user-info" id="userInfo"></div>
-      <button class="logout-btn" onclick="logout()">გასვლა</button>
+      <div class="logo-container">
+        <img src="https://via.placeholder.com/50" alt="Logo" class="logo" />
+        <h1 class="header-title">ციფრული მომავალი</h1>
+      </div>
+      <div style="display: flex; align-items: center">
+        <div class="user-info" id="userInfo"></div>
+        <button class="logout-btn" onclick="logout()">გასვლა</button>
+      </div>
     </div>
     <div class="welcome-message">
       <p>თქვენ წარმატებით შეხვედით სისტემაში.</p>
@@ -110,14 +134,13 @@
         if (loggedInUser && loggedInUser.name) {
           userInfoElement.textContent = loggedInUser.name;
         } else {
-          // თუ მომხმარებელი არ არის შესული, გადამისამართება შესვლის გვერდზე
-          window.location.href = "index.html"; // თქვენი შესვლის გვერდის ფაილის სახელი
+          window.location.href = "index.html";
         }
       });
 
       function logout() {
-        localStorage.removeItem("loggedInUser"); // წაშლა localStorage-დან
-        window.location.href = "index.html"; // გადამისამართება შესვლის გვერდზე
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index.html";
       }
     </script>
   </body>
