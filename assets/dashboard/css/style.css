@@ -32,7 +32,8 @@ body {
   flex-direction: column;
   align-items: center;
   color: var(--light-text-color);
-  padding-top: 80px; /* შემცირებული ჰედერის გამო */
+  padding-top: 80px;
+  margin: 0;
 }
 
 .header {
@@ -50,10 +51,11 @@ body {
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 10px 20px; /* შემცირებული padding */
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
 }
 
 .logo-container {
@@ -65,12 +67,45 @@ body {
   font-size: 24px;
   color: var(--accent-color-1);
   font-weight: 600;
+  margin: 0;
+}
+
+.burger-menu {
+  display: none;
+  cursor: pointer;
+  color: var(--light-text-color);
+  position: relative;
+}
+
+.burger-menu .burger-icon,
+.burger-menu .close-icon {
+  stroke: var(--accent-color-1);
+  transition: all 0.3s ease;
+}
+
+.burger-menu:hover .burger-icon,
+.burger-menu:hover .close-icon {
+  stroke: var(--accent-color-2);
+  transform: scale(1.1);
+}
+
+.burger-menu.active .burger-icon {
+  display: none;
+}
+
+.burger-menu.active .close-icon {
+  display: block !important;
+}
+
+.burger-menu svg {
+  stroke: var(--accent-color-1);
 }
 
 .right-section {
   display: flex;
   align-items: center;
-  gap: 20px; /* შემცირებული გაპი */
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .navigation {
@@ -83,26 +118,46 @@ body {
   text-decoration: none;
   font-size: 16px;
   font-weight: 500;
-  transition: color 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
 .nav-link:hover {
   color: var(--accent-color-2);
+  background: var(--hover-bg);
+  transform: translateY(-1px);
 }
 
-.theme-toggle {
+.theme-toggle,
+.theme-toggle-mobile {
   cursor: pointer;
   display: flex;
   align-items: center;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border: none;
+  background: none;
+}
+
+.theme-toggle:hover,
+.theme-toggle-mobile:hover {
+  transform: rotate(15deg) scale(1.1);
 }
 
 .theme-icon {
   color: var(--light-text-color);
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-.theme-toggle:hover .theme-icon {
-  transform: scale(1.1);
+.theme-toggle:hover .theme-icon,
+.theme-toggle-mobile:hover .theme-icon {
+  color: var(--accent-color-2);
 }
 
 .dark-icon {
@@ -128,7 +183,7 @@ body.light .light-icon {
 }
 
 .avatar-container {
-  width: 32px; /* შემცირებული ზომა */
+  width: 32px;
   height: 32px;
   border-radius: 50%;
   cursor: pointer;
@@ -138,12 +193,14 @@ body.light .light-icon {
   justify-content: center;
   overflow: hidden;
   position: relative;
-  transition: transform 0.2s ease;
+  transition: all 0.3s ease;
   user-select: none;
 }
 
 .avatar-container:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  border-color: var(--accent-color-2);
+  box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
 }
 
 .avatar {
@@ -160,8 +217,8 @@ body.light .light-icon {
   align-items: center;
   justify-content: center;
   background: var(--accent-color-1);
-  color: var(--light-text-color);
-  font-size: 14px; /* შემცირებული ფონტი */
+  color: var(--primary-bg-color);
+  font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -176,7 +233,7 @@ body.light .light-icon {
 
 .dropdown {
   position: absolute;
-  top: 40px; /* შეცვლილი ავატარის ზომის გამო */
+  top: 50px; /* Updated top value */
   right: 0;
   background: var(--card-bg);
   backdrop-filter: blur(8px);
@@ -201,44 +258,32 @@ body.light .light-icon {
 }
 
 .dropdown-item {
-  padding: 10px 18px;
+  padding: 8px 16px; /* Updated vertical padding */
   color: var(--light-text-color);
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
-  opacity: 0;
-  transform: translateY(8px);
-}
-
-.dropdown.active .dropdown-item {
   opacity: 1;
   transform: translateY(0);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin: 6px;
 }
 
-.dropdown-item:nth-child(1) {
-  transition-delay: 0.05s;
-}
-
-.dropdown-item:nth-child(2) {
-  transition-delay: 0.1s;
-}
-
-.dropdown-item:nth-child(3) {
-  transition-delay: 0.15s;
+.dropdown-item:last-child {
+  border-bottom: none;
 }
 
 .dropdown-item:hover {
   background: var(--hover-bg);
   color: var(--accent-color-2);
-  transform: translateX(4px);
-}
-
-.dropdown-item:hover svg {
-  stroke: var(--accent-color-2);
+  /* ავიღე translateX(6px) რომ ელემენტები არ გავიდეს dropdown-ის გარეთ */
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(79, 209, 197, 0.2);
 }
 
 .dropdown-item svg {
@@ -246,17 +291,129 @@ body.light .light-icon {
   height: 14px;
   margin-right: 8px;
   stroke: var(--accent-color-1);
-  transition: stroke 0.2s ease;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .hidden {
+  display: none !important;
+}
+
+.mobile-menu {
   display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  padding: 10px;
+  z-index: 10;
+  min-width: 200px;
+  border: 1px solid var(--border-color);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.mobile-menu.active {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navigation-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.theme-toggle-mobile {
+  margin: 10px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user-section-mobile {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.dropdown-mobile {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: none;
+  flex-direction: column;
+  z-index: 10;
+  min-width: 180px;
+  border: 1px solid var(--border-color);
+  margin-top: 10px;
+  user-select: none;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.dropdown-mobile.active {
+  display: flex;
+  opacity: 1;
+  max-height: 250px;
+}
+
+.dropdown-mobile .dropdown-item {
+  padding: 8px 16px; /* Updated vertical padding */
+  color: var(--light-text-color);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 500;
+  opacity: 1;
+  transform: translateY(0);
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin: 6px;
+}
+
+.dropdown-mobile .dropdown-item:last-child {
+  border-bottom: none;
+}
+
+.dropdown-mobile .dropdown-item:hover {
+  background: var(--hover-bg);
+  color: var(--accent-color-2);
+  transform: scale(1.02);
+  box-shadow: 0 2px 8px rgba(79, 209, 197, 0.2);
+}
+
+.dropdown-mobile .dropdown-item:hover svg {
+  stroke: var(--accent-color-2);
+  transform: scale(1.1);
+}
+
+.dropdown-mobile .dropdown-item svg {
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  stroke: var(--accent-color-1);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .main-container {
   width: 100%;
   max-width: 1200px;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -281,31 +438,32 @@ body.light .light-icon {
 }
 
 @media (max-width: 768px) {
+  body {
+    padding-top: 60px;
+  }
   .header-container {
-    flex-direction: column;
-    text-align: center;
-    gap: 10px;
+    justify-content: space-between;
     padding: 10px 15px;
   }
-  .logo-container {
-    justify-content: center;
+  .burger-menu {
+    display: block;
+  }
+  .right-section {
+    display: none;
   }
   .header-title {
     font-size: 20px;
   }
-  .right-section {
-    flex-direction: column;
-    gap: 10px;
+  .welcome-message {
+    font-size: 20px;
   }
-  .navigation {
-    flex-direction: column;
-    gap: 10px;
+  .navigation-mobile {
+    text-align: center;
   }
   .dropdown {
     top: 50px;
-    right: auto;
-  }
-  .welcome-message {
-    font-size: 20px;
+    right: 0;
+    left: auto;
+    transform-origin: top center;
   }
 }

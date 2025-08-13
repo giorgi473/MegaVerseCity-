@@ -12,6 +12,39 @@
         <div class="logo-container">
           <h1 class="header-title">ციფრული მომავალი</h1>
         </div>
+        <div class="burger-menu" onclick="toggleBurgerMenu()">
+          <svg
+            class="burger-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg
+            class="close-icon hidden"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </div>
         <div class="right-section">
           <nav class="navigation">
             <a href="#" class="nav-link">მთავარი</a>
@@ -59,7 +92,7 @@
           <div class="user-section">
             <div class="avatar-container" onclick="toggleDropdown()">
               <img id="avatarImg" class="avatar hidden" src="" alt="Avatar" />
-              <div id="avatarInitials" class="avatar-initials"></div>
+              <div id="avatarInitials" class="avatar-initials">მმ</div>
             </div>
             <div id="dropdownMenu" class="dropdown">
               <label class="dropdown-item" for="avatarUpload">
@@ -116,6 +149,115 @@
             </div>
           </div>
         </div>
+        <div id="mobileMenu" class="mobile-menu">
+          <nav class="navigation-mobile">
+            <a href="#" class="nav-link">მთავარი</a>
+            <a href="#" class="nav-link">პროფილი</a>
+            <a href="#" class="nav-link">პარამეტრები</a>
+          </nav>
+          <div class="theme-toggle-mobile" onclick="toggleTheme()">
+            <svg
+              class="theme-icon dark-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg
+              class="theme-icon light-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </div>
+          <div class="user-section-mobile">
+            <div class="avatar-container" onclick="toggleMobileDropdown()">
+              <img
+                id="avatarImgMobile"
+                class="avatar hidden"
+                src=""
+                alt="Avatar"
+              />
+              <div id="avatarInitialsMobile" class="avatar-initials">.</div>
+            </div>
+          </div>
+          <div id="dropdownMenuMobile" class="dropdown-mobile">
+            <div class="dropdown-item" onclick="triggerFileUpload()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+              ატვირთვა
+            </div>
+            <div
+              id="deleteAvatarMobile"
+              class="dropdown-item hidden"
+              onclick="deleteAvatar()"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 6h18" />
+                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                <path d="M10 11v6" />
+                <path d="M14 11v6" />
+                <path d="M6 6h12v12a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V6z" />
+              </svg>
+              სურათის წაშლა
+            </div>
+            <div class="dropdown-item" onclick="logout()">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <polyline points="16 17 21 12 16 7" />
+                <line x1="21" y1="12" x2="9" y2="12" />
+              </svg>
+              გამოსვლა
+            </div>
+          </div>
+        </div>
       </div>
     </header>
     <input
@@ -127,7 +269,7 @@
     />
     <div class="main-container">
       <div class="welcome-message">
-        <p id="welcomeText">თქვენ წარმატებით შეხვედით სისტემაში.</p>
+        <p id="welcomeText">კეთილი იყოს თქვენი მობრძანება!</p>
       </div>
     </div>
 
