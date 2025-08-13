@@ -8,6 +8,18 @@
   --light-text-color: #e2e8f0;
   --hover-bg: rgba(79, 209, 197, 0.1);
 }
+
+body.light {
+  --primary-bg-color: #f0f4f8;
+  --secondary-bg-color: #ffffff;
+  --accent-color-1: #0d9488;
+  --accent-color-2: #14b8a6;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --light-text-color: #1f2937;
+  --hover-bg: rgba(20, 184, 166, 0.1);
+}
+
 body {
   font-family: "Inter", sans-serif;
   background: linear-gradient(
@@ -19,46 +31,105 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
   color: var(--light-text-color);
-  padding: 20px;
+  padding-top: 80px; /* შემცირებული ჰედერის გამო */
 }
+
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 1200px;
   background: var(--card-bg);
   backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 15px 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid var(--border-color);
+  z-index: 1000;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px; /* შემცირებული padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 40px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-color);
 }
+
 .logo-container {
   display: flex;
   align-items: center;
 }
-.logo {
-  width: 50px;
-  height: 50px;
-  margin-right: 15px;
-}
+
 .header-title {
   font-size: 24px;
   color: var(--accent-color-1);
   font-weight: 600;
 }
+
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* შემცირებული გაპი */
+}
+
+.navigation {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-link {
+  color: var(--light-text-color);
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent-color-2);
+}
+
+.theme-toggle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.theme-icon {
+  color: var(--light-text-color);
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover .theme-icon {
+  transform: scale(1.1);
+}
+
+.dark-icon {
+  display: block;
+}
+
+.light-icon {
+  display: none;
+}
+
+body.light .dark-icon {
+  display: none;
+}
+
+body.light .light-icon {
+  display: block;
+}
+
 .user-section {
   display: flex;
   align-items: center;
   position: relative;
 }
+
 .avatar-container {
-  width: 40px;
-  height: 40px;
+  width: 32px; /* შემცირებული ზომა */
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid var(--accent-color-1);
@@ -70,15 +141,18 @@ body {
   transition: transform 0.2s ease;
   user-select: none;
 }
+
 .avatar-container:hover {
   transform: scale(1.05);
 }
+
 .avatar {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: none;
 }
+
 .avatar-initials {
   width: 100%;
   height: 100%;
@@ -87,19 +161,22 @@ body {
   justify-content: center;
   background: var(--accent-color-1);
   color: var(--light-text-color);
-  font-size: 16px;
+  font-size: 14px; /* შემცირებული ფონტი */
   font-weight: 600;
   text-transform: uppercase;
 }
+
 .avatar-initials.hidden {
   display: none;
 }
+
 .avatar:not(.hidden) {
   display: block;
 }
+
 .dropdown {
   position: absolute;
-  top: 50px;
+  top: 40px; /* შეცვლილი ავატარის ზომის გამო */
   right: 0;
   background: var(--card-bg);
   backdrop-filter: blur(8px);
@@ -116,11 +193,13 @@ body {
   transition: transform 0.2s ease-out, opacity 0.2s ease-out;
   user-select: none;
 }
+
 .dropdown.active {
   display: flex;
   transform: scale(1);
   opacity: 1;
 }
+
 .dropdown-item {
   padding: 10px 18px;
   color: var(--light-text-color);
@@ -134,27 +213,34 @@ body {
   opacity: 0;
   transform: translateY(8px);
 }
+
 .dropdown.active .dropdown-item {
   opacity: 1;
   transform: translateY(0);
 }
+
 .dropdown-item:nth-child(1) {
   transition-delay: 0.05s;
 }
+
 .dropdown-item:nth-child(2) {
   transition-delay: 0.1s;
 }
+
 .dropdown-item:nth-child(3) {
   transition-delay: 0.15s;
 }
+
 .dropdown-item:hover {
   background: var(--hover-bg);
   color: var(--accent-color-2);
   transform: translateX(4px);
 }
+
 .dropdown-item:hover svg {
   stroke: var(--accent-color-2);
 }
+
 .dropdown-item svg {
   width: 14px;
   height: 14px;
@@ -162,16 +248,27 @@ body {
   stroke: var(--accent-color-1);
   transition: stroke 0.2s ease;
 }
+
 .hidden {
   display: none;
 }
+
+.main-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .welcome-message {
   font-size: 24px;
   text-align: center;
-  margin-top: 20px;
   color: var(--light-text-color);
   animation: fade-in 1s ease-out;
 }
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -182,12 +279,13 @@ body {
     transform: translateY(0);
   }
 }
+
 @media (max-width: 768px) {
-  .header {
+  .header-container {
     flex-direction: column;
     text-align: center;
-    gap: 15px;
-    padding: 15px 20px;
+    gap: 10px;
+    padding: 10px 15px;
   }
   .logo-container {
     justify-content: center;
@@ -195,11 +293,16 @@ body {
   .header-title {
     font-size: 20px;
   }
-  .user-section {
-    justify-content: center;
+  .right-section {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .navigation {
+    flex-direction: column;
+    gap: 10px;
   }
   .dropdown {
-    top: 60px;
+    top: 50px;
     right: auto;
   }
   .welcome-message {

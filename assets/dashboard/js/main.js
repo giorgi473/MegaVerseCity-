@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
   if (loggedInUser) {
-    // Extract first letters of first name and last name
     const nameParts = loggedInUser.name.trim().split(" ");
     let initials = "";
     if (nameParts.length >= 1) {
@@ -52,7 +51,7 @@ function handleAvatarUpload(event) {
       document.getElementById("avatarImg").classList.remove("hidden");
       document.getElementById("avatarInitials").classList.add("hidden");
       document.getElementById("deleteAvatar").classList.remove("hidden");
-      toggleDropdown(); // Close dropdown after upload
+      toggleDropdown();
     };
     reader.readAsDataURL(file);
   }
@@ -65,7 +64,7 @@ function deleteAvatar() {
   document.getElementById("avatarImg").classList.add("hidden");
   document.getElementById("avatarInitials").classList.remove("hidden");
   document.getElementById("deleteAvatar").classList.add("hidden");
-  toggleDropdown(); // Close dropdown after deletion
+  toggleDropdown();
 }
 
 function logout() {
@@ -73,7 +72,10 @@ function logout() {
   window.location.href = "../../index.html";
 }
 
-// Close dropdown when clicking outside
+function toggleTheme() {
+  document.body.classList.toggle("light");
+}
+
 document.addEventListener("click", function (event) {
   const userSection = document.querySelector(".user-section");
   if (!userSection.contains(event.target)) {
