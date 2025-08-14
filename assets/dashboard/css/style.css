@@ -20,6 +20,14 @@ body.light {
   --hover-bg: rgba(20, 184, 166, 0.1);
 }
 
+/* Added overflow-x hidden to prevent horizontal scroll */
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+}
+
 body {
   font-family: "Inter", sans-serif;
   background: linear-gradient(
@@ -34,6 +42,15 @@ body {
   color: var(--light-text-color);
   padding-top: 80px;
   margin: 0;
+  /* Added box-sizing to ensure padding doesn't cause overflow */
+  box-sizing: border-box;
+}
+
+/* Added universal box-sizing */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 .header {
@@ -56,6 +73,9 @@ body {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  /* Ensure header container doesn't overflow */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .logo-container {
@@ -147,6 +167,7 @@ body {
 
 .theme-toggle:hover,
 .theme-toggle-mobile:hover {
+  background: var(--hover-bg);
   transform: rotate(15deg) scale(1.1);
 }
 
@@ -233,7 +254,7 @@ body.light .light-icon {
 
 .dropdown {
   position: absolute;
-  top: 50px; /* Updated top value */
+  top: 50px;
   right: 0;
   background: var(--card-bg);
   backdrop-filter: blur(8px);
@@ -258,7 +279,7 @@ body.light .light-icon {
 }
 
 .dropdown-item {
-  padding: 8px 16px; /* Updated vertical padding */
+  padding: 8px 16px;
   color: var(--light-text-color);
   text-decoration: none;
   cursor: pointer;
@@ -281,7 +302,6 @@ body.light .light-icon {
 .dropdown-item:hover {
   background: var(--hover-bg);
   color: var(--accent-color-2);
-  /* ავიღე translateX(6px) რომ ელემენტები არ გავიდეს dropdown-ის გარეთ */
   transform: scale(1.02);
   box-shadow: 0 2px 8px rgba(79, 209, 197, 0.2);
 }
@@ -370,7 +390,7 @@ body.light .light-icon {
 }
 
 .dropdown-mobile .dropdown-item {
-  padding: 8px 16px; /* Updated vertical padding */
+  padding: 8px 16px;
   color: var(--light-text-color);
   text-decoration: none;
   cursor: pointer;
@@ -411,19 +431,144 @@ body.light .light-icon {
   flex-shrink: 0;
 }
 
+/* Enhanced responsive main container */
 .main-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 40px 20px;
+  /* Added box-sizing and overflow control */
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-.welcome-message {
-  font-size: 24px;
+.hero-section {
   text-align: center;
-  color: var(--light-text-color);
+  max-width: 1000px;
+  margin: 0 auto;
   animation: fade-in 1s ease-out;
+  /* Ensure hero section doesn't overflow */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--light-text-color);
+  margin: 0 0 24px 0;
+  line-height: 1.2;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color-1),
+    var(--accent-color-2)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-description {
+  font-size: 18px;
+  background: linear-gradient(
+    135deg,
+    var(--light-text-color),
+    var(--accent-color-1)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.9;
+  line-height: 1.6;
+  margin: 0 0 32px 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-image {
+  margin: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1500px;
+  width: 100%;
+}
+
+.hero-image img {
+  /* Fixed the main cause of horizontal scroll - removed width: 120% */
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 16px;
+  transition: all 0.1s ease-out, transform 0.05s ease-out, opacity 0.1s ease-out,
+    filter 0.1s ease-out;
+  border: 1px solid var(--border-color);
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  /* Changed from object-fit: cover to contain to preserve full image */
+  object-fit: contain;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cta-button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;
+}
+
+.cta-button.primary {
+  background: linear-gradient(
+    135deg,
+    var(--accent-color-1),
+    var(--accent-color-2)
+  );
+  color: var(--primary-bg-color);
+  box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
+}
+
+.cta-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 209, 197, 0.4);
+  filter: brightness(1.1);
+}
+
+.cta-button.secondary {
+  background: transparent;
+  background: linear-gradient(
+    135deg,
+    var(--accent-color-1),
+    var(--accent-color-2)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  border: 2px solid var(--accent-color-1);
+}
+
+.cta-button.secondary:hover {
+  background: var(--accent-color-1);
+  -webkit-text-fill-color: var(--primary-bg-color);
+  color: var(--primary-bg-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(79, 209, 197, 0.3);
 }
 
 @keyframes fade-in {
@@ -437,33 +582,227 @@ body.light .light-icon {
   }
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-bg-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-color-1);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color-2);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color-1) var(--secondary-bg-color);
+}
+/* Enhanced mobile responsiveness */
 @media (max-width: 768px) {
   body {
     padding-top: 60px;
+    /* Added padding constraint */
+    padding-left: 0;
+    padding-right: 0;
   }
+
   .header-container {
     justify-content: space-between;
     padding: 10px 15px;
+    /* Ensure header doesn't overflow on mobile */
+    max-width: 100%;
   }
+
   .burger-menu {
     display: block;
   }
+
   .right-section {
     display: none;
   }
+
   .header-title {
     font-size: 20px;
   }
-  .welcome-message {
-    font-size: 20px;
-  }
+
   .navigation-mobile {
     text-align: center;
   }
+
   .dropdown {
     top: 50px;
     right: 0;
     left: auto;
     transform-origin: top center;
+  }
+
+  /* Enhanced main container responsiveness */
+  .main-container {
+    padding: 20px 15px;
+    max-width: 100%;
+    /* Added margin constraint */
+    margin: 0;
+  }
+
+  .hero-section {
+    max-width: 100%;
+    padding: 0 10px;
+    /* Added margin constraint */
+    margin: 0;
+  }
+
+  .hero-title {
+    font-size: 28px;
+    margin-bottom: 16px;
+    line-height: 1.3;
+  }
+
+  .hero-description {
+    font-size: 16px;
+    margin-bottom: 24px;
+    padding: 0 10px;
+    line-height: 1.5;
+  }
+
+  .hero-image {
+    margin: 20px 0;
+    padding: 0 10px;
+    /* Added width constraint */
+    max-width: 100%;
+  }
+
+  .hero-image img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+    /* Added mobile-specific image constraints */
+    object-fit: contain;
+    display: block;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 24px;
+    font-size: 16px;
+  }
+}
+@media (max-width: 1200px) {
+  .main-container {
+    padding: 30px 20px;
+    /* Added max-width constraint */
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-description {
+    font-size: 17px;
+  }
+  .hero-image {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    width: 100%;
+  }
+  .hero-image img {
+    width: 100%;
+    max-width: 85%;
+    object-fit: contain;
+  }
+}
+/* Additional tablet responsiveness */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .main-container {
+    padding: 30px 20px;
+    /* Added max-width constraint */
+    max-width: 100%;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+
+  .hero-description {
+    font-size: 17px;
+  }
+  .hero-image {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+    width: 100%;
+  }
+  .hero-image img {
+    width: 100%;
+    max-width: 85%;
+    object-fit: contain;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .main-container {
+    padding: 15px 10px;
+    /* Added margin constraint */
+    margin: 0;
+  }
+
+  .hero-section {
+    padding: 0 5px;
+    /* Added width constraint */
+    width: 100%;
+  }
+
+  .hero-title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+    padding: 0 5px;
+  }
+
+  .hero-image {
+    margin: 20px 0;
+    padding: 0 10px;
+    /* Added width constraint */
+    max-width: 100%;
+  }
+
+  .hero-image img {
+    /* Added constraints for very small screens */
+    object-fit: contain;
+  }
+
+  .hero-actions {
+    padding: 0 10px;
+  }
+
+  .cta-button {
+    padding: 12px 20px;
+    font-size: 14px;
+    max-width: 250px;
   }
 }
