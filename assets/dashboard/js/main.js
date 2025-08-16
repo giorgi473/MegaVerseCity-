@@ -1,3 +1,17 @@
+window.addEventListener("load", () => {
+  const loader = document.getElementById("loader");
+
+  // Hide loader after minimum display time
+  setTimeout(() => {
+    loader.classList.add("hidden");
+
+    // Remove loader from DOM after transition
+    setTimeout(() => {
+      loader.remove();
+    }, 500);
+  }, 1500); // Show loader for at least 1.5 seconds
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const avatarImg = document.getElementById("avatarImg");
   const avatarInitials = document.getElementById("avatarInitials");
