@@ -7,10 +7,8 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- Header will be automatically injected here by header-component.js -->
-
     <main class="main-container">
-      <div class="hero-section">
+      <section class="hero-section">
         <h1 class="hero-title">შექმენი მომავალი რომელიც ჯერ არ არსებობს</h1>
         <p class="hero-description">
           ჩვენ ვცხოვრობთ ისტორიის ყველაზე მნიშვნელოვან მომენტში - სადაც AI, Web3
@@ -28,10 +26,353 @@
             alt="ტექნოლოგიური მომავალი"
           />
         </div>
+      </section>
+
+      <section class="vision-cards-section">
+        <h2 class="vision-title">მომავლის ტექნოლოგიები</h2>
+        <div class="vision-cards-container">
+          <div
+            class="vision-card"
+            data-tech="ai"
+            role="button"
+            tabindex="0"
+            aria-label="ხელოვნური ინტელექტი"
+          >
+            <div class="card-front">
+              <h3>ხელოვნური ინტელექტი</h3>
+              <p>ჭკვიანი სისტემები, რომლებიც სწავლობენ და ადაპტირდებიან.</p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">85%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>AI ცვლის ყველაფერს - მედიცინიდან განათლებამდე.</p>
+              <button
+                class="card-cta"
+                aria-label="გაიგე მეტი ხელოვნური ინტელექტის შესახებ"
+              >
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+          <div
+            class="vision-card"
+            data-tech="web3"
+            role="button"
+            tabindex="0"
+            aria-label="Web3"
+          >
+            <div class="card-front">
+              <h3>Web3</h3>
+              <p>დეცენტრალიზებული ინტერნეტი ნდობისა და გამჭვირვალობისთვის.</p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">70%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>ბლოკჩეინზე დაფუძნებული სისტემები.</p>
+              <button class="card-cta" aria-label="გაიგე მეტი Web3-ის შესახებ">
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+          <div
+            class="vision-card"
+            data-tech="quantum"
+            role="button"
+            tabindex="0"
+            aria-label="კვანტური გამოთვლები"
+          >
+            <div class="card-front">
+              <h3>კვანტური გამოთვლები</h3>
+              <p>გამოთვლების ახალი ერა ზეადამიანური სიჩქარით.</p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">60%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>კვანტური კომპიუტერები ამუშავებენ შეუძლებელ ამოცანებს.</p>
+              <button
+                class="card-cta"
+                aria-label="გაიგე მეტი კვანტური გამოთვლების შესახებ"
+              >
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+          <div
+            class="vision-card"
+            data-tech="biotech"
+            role="button"
+            tabindex="0"
+            aria-label="ბიოტექნოლოგია"
+          >
+            <div class="card-front">
+              <h3>ბიოტექნოლოგია</h3>
+              <p>
+                სამედიცინო ინოვაციები გენური თერაპიისა და პერსონალიზებული
+                მედიცინისთვის.
+              </p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">75%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>ბიოტექნოლოგია ცვლის ჯანდაცვის მომავალს.</p>
+              <button
+                class="card-cta"
+                aria-label="გაიგე მეტი ბიოტექნოლოგიის შესახებ"
+              >
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+          <div
+            class="vision-card"
+            data-tech="arvr"
+            role="button"
+            tabindex="0"
+            aria-label="AR/VR"
+          >
+            <div class="card-front">
+              <h3>AR/VR</h3>
+              <p>
+                გაძლიერებული და ვირტუალური რეალობა განათლებისა და გართობისთვის.
+              </p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">65%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>AR/VR ქმნის ჩაძირვის ახალ გამოცდილებას.</p>
+              <button class="card-cta" aria-label="გაიგე მეტი AR/VR-ის შესახებ">
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+          <div
+            class="vision-card"
+            data-tech="spacetech"
+            role="button"
+            tabindex="0"
+            aria-label="კოსმოსური ტექნოლოგიები"
+          >
+            <div class="card-front">
+              <h3>კოსმოსური ტექნოლოგიები</h3>
+              <p>კოსმოსის ათვისება მდგრადი მისიებისა და კოლონიზაციისთვის.</p>
+              <div class="progress-circle">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle
+                    class="progress-ring__circle"
+                    stroke-width="6"
+                    fill="transparent"
+                    r="30"
+                    cx="40"
+                    cy="40"
+                  />
+                </svg>
+                <span class="progress-text">55%</span>
+              </div>
+            </div>
+            <div class="card-back">
+              <p>კოსმოსური ტექნოლოგიები ხსნის ახალ სამყაროებს.</p>
+              <button
+                class="card-cta"
+                aria-label="გაიგე მეტი კოსმოსური ტექნოლოგიების შესახებ"
+              >
+                გაიგე მეტი
+              </button>
+            </div>
+            <div class="card-particles"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="accordion-section">
+        <h2 class="accordion-title">
+          მომავლის შესახებ ხშირად დასმული კითხვები
+        </h2>
+        <div class="accordion-container">
+          <div class="accordion-item">
+            <button
+              class="accordion-header"
+              aria-expanded="false"
+              aria-controls="accordion-content-1"
+            >
+              როგორ შეცვლის AI მომავალს?
+              <span class="accordion-icon"></span>
+            </button>
+            <div class="accordion-content" id="accordion-content-1">
+              <p>
+                ხელოვნური ინტელექტი (AI) გარდაქმნის ინდუსტრიებს ავტომატიზაციის,
+                მონაცემთა ანალიზისა და პერსონალიზაციის გზით, რაც საშუალებას
+                მისცემს უფრო ჭკვიანი გადაწყვეტილებების მიღებას ჯანდაცვაში,
+                განათლებასა და სხვა სფეროებში.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button
+              class="accordion-header"
+              aria-expanded="false"
+              aria-controls="accordion-content-2"
+            >
+              რა არის Web3-ის პოტენციალი?
+              <span class="accordion-icon"></span>
+            </button>
+            <div class="accordion-content" id="accordion-content-2">
+              <p>
+                Web3 გთავაზობთ დეცენტრალიზებულ ინტერნეტს, სადაც მომხმარებლები
+                ფლობენ თავიანთ მონაცემებს, რაც ზრდის გამჭვირვალობას,
+                უსაფრთხოებასა და ნდობას ციფრულ ტრანზაქციებში.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button
+              class="accordion-header"
+              aria-expanded="false"
+              aria-controls="accordion-content-3"
+            >
+              რა არის კვანტური გამოთვლების მნიშვნელობა?
+              <span class="accordion-icon"></span>
+            </button>
+            <div class="accordion-content" id="accordion-content-3">
+              <p>
+                კვანტური გამოთვლები საშუალებას იძლევა გადაჭრას რთული ამოცანები,
+                რომლებიც შეუძლებელია ტრადიციული კომპიუტერებს, რაც გარდაქმნის
+                კრიპტოგრაფიასა და მეცნიერებას.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <button
+              class="accordion-header"
+              aria-expanded="false"
+              aria-controls="accordion-content-4"
+            >
+              როგორ გარდაქმნის ბიოტექნოლოგია ჯანდაცვას?
+              <span class="accordion-icon"></span>
+            </button>
+            <div class="accordion-content" id="accordion-content-4">
+              <p>
+                ბიოტექნოლოგია ხელს უწყობს გენურ თერაპიას, პერსონალიზებულ
+                მედიცინას და ორგანოების რეგენერაციას, რაც მნიშვნელოვნად
+                აუმჯობესებს ჯანდაცვის ხარისხს.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div
+        class="modal hidden"
+        id="visionModal"
+        role="dialog"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-content">
+          <button class="modal-close" aria-label="დახურვა">&times;</button>
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div class="modal-progress">
+            <div class="modal-progress-bar"></div>
+          </div>
+          <div class="modal-media">
+            <img class="modal-image hidden" src="" alt="" />
+            <p class="modal-image-error hidden"></p>
+          </div>
+          <p class="modal-description"></p>
+          <div class="modal-stats">
+            <div class="stat-item">
+              <span class="stat-value" id="modalStatImpact"></span>
+              <span class="stat-label">გავლენა</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="modalStatAdoption"></span>
+              <span class="stat-label">მიღება</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="modalStatInnovation"></span>
+              <span class="stat-label">ინოვაცია</span>
+            </div>
+          </div>
+          <button class="modal-cta">მიიღე მონაწილეობა</button>
+          <div class="modal-form hidden">
+            <form id="participationForm">
+              <div class="form-group">
+                <label for="name">სახელი</label>
+                <input type="text" id="name" required />
+              </div>
+              <div class="form-group">
+                <label for="email">ელ.ფოსტა</label>
+                <input type="email" id="email" required />
+              </div>
+              <div class="form-group">
+                <label for="reason">რატომ გსურთ მონაწილეობა?</label>
+                <textarea id="reason" required></textarea>
+              </div>
+              <button type="submit" style="margin-top: 10px">გაგზავნა</button>
+            </form>
+          </div>
+          <p class="modal-success hidden">წარმატებით გაგზავნილი!</p>
+        </div>
       </div>
     </main>
-
-    <!-- Include header component script -->
     <script src="js/header-component.js"></script>
     <script src="js/main.js"></script>
   </body>
