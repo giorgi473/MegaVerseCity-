@@ -615,3 +615,178 @@ document.addEventListener("click", (event) => {
     if (burgerMenu) burgerMenu.classList.remove("active");
   }
 });
+
+// ---------------------------
+
+const timelineData = [
+  {
+    year: 2025,
+    tech: "ai",
+    title: "AI-ის მასობრივი ინტეგრაცია",
+    description:
+      "AI ინტეგრირდება ყოველდღიურ ცხოვრებაში, ავტომატიზაციას უწევს სამუშაოებს.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/artificial-intelligence.png",
+  },
+  {
+    year: 2027,
+    tech: "web3",
+    title: "Web3-ის მთავარი ნაკადი",
+    description:
+      "დეცენტრალიზებული პლატფორმები ხდება ინტერნეტის ძირითადი ნაწილი.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/blockchain-technology.png",
+  },
+  {
+    year: 2030,
+    tech: "quantum",
+    title: "კვანტური გამოთვლები",
+    description:
+      "პირველი კომერციული კვანტური კომპიუტერები ხელმისაწვდომი ხდება.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/quantum.png",
+  },
+  {
+    year: 2032,
+    tech: "biotech",
+    title: "გენური თერაპიის გავრცელება",
+    description: "გენური თერაპია ხდება სტანდარტული სამედიცინო პრაქტიკა.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/dna-helix.png",
+  },
+  {
+    year: 2035,
+    tech: "arvr",
+    title: "AR/VR განათლებაში",
+    description: "AR/VR გარდაქმნის განათლებას ინტერაქტიული გამოცდილებით.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/virtual-reality.png",
+  },
+  {
+    year: 2040,
+    tech: "spacetech",
+    title: "მთვარის კოლონიზაცია",
+    description: "ადამიანები იწყებენ მთვარის მუდმივი დასახლების მშენებლობას.",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/rocket.png",
+  },
+];
+
+// Populate Timeline with Infinite Loop
+document.addEventListener("DOMContentLoaded", () => {
+  const timelineTrack = document.querySelector(".timeline-track");
+  if (timelineTrack) {
+    // Duplicate items for infinite loop (3 sets for smooth cycling)
+    const duplicatedData = [...timelineData, ...timelineData, ...timelineData];
+    duplicatedData.forEach((item, index) => {
+      const timelineItem = document.createElement("div");
+      timelineItem.classList.add("timeline-item");
+      if (index % timelineData.length === 0)
+        timelineItem.classList.add("active");
+      timelineItem.setAttribute("data-tech", item.tech);
+      timelineItem.innerHTML = `
+        <img src="${item.icon}" alt="${item.title} icon" class="tech-icon">
+        <span class="year">${item.year}</span>
+        <h3>${item.title}</h3>
+        <p>${item.description}</p>
+      `;
+      timelineTrack.appendChild(timelineItem);
+
+      // Modal Trigger
+      timelineItem.addEventListener("click", () => {
+        openModal(item.tech);
+      });
+    });
+
+    // Timeline Navigation
+    const prevButton = document.querySelector(".timeline-nav.prev");
+    const nextButton = document.querySelector(".timeline-nav.next");
+    let currentIndex = timelineData.length; // Start in the middle set
+    const itemWidth = 320; // Width of timeline item + gap
+    const totalItems = duplicatedData.length;
+    const originalLength = timelineData.length;
+
+    function updateTimeline(smooth = true) {
+      if (!smooth) {
+        timelineTrack.style.transition = "none";
+      } else {
+        timelineTrack.style.transition = "transform 0.5s ease-in-out";
+      }
+      timelineTrack.style.transform = `translateX(-${
+        currentIndex * itemWidth
+      }px)`;
+      document.querySelectorAll(".timeline-item").forEach((item, idx) => {
+        item.classList.toggle("active", idx === currentIndex);
+      });
+      // Enable buttons (no disable for infinite loop)
+      prevButton.disabled = false;
+      nextButton.disabled = false;
+    }
+
+    function resetPosition() {
+      // Reset to middle set when reaching boundaries
+      if (currentIndex >= totalItems - originalLength) {
+        currentIndex = originalLength;
+        updateTimeline(false);
+      } else if (currentIndex < originalLength) {
+        currentIndex = totalItems - originalLength * 2;
+        updateTimeline(false);
+      }
+    }
+
+    prevButton.addEventListener("click", () => {
+      currentIndex--;
+      updateTimeline();
+      setTimeout(resetPosition, 500); // Reset after transition
+    });
+
+    nextButton.addEventListener("click", () => {
+      currentIndex++;
+      updateTimeline();
+      setTimeout(resetPosition, 500); // Reset after transition
+    });
+
+    // Auto-scroll for infinite loop
+    let autoScrollInterval;
+    timelineTrack.addEventListener("mouseenter", () => {
+      autoScrollInterval = setInterval(() => {
+        currentIndex++;
+        updateTimeline();
+        setTimeout(resetPosition, 500);
+      }, 3000);
+    });
+
+    timelineTrack.addEventListener("mouseleave", () => {
+      clearInterval(autoScrollInterval);
+    });
+
+    // Keyboard Navigation
+    timelineTrack.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        currentIndex--;
+        updateTimeline();
+        setTimeout(resetPosition, 500);
+      } else if (e.key === "ArrowRight") {
+        currentIndex++;
+        updateTimeline();
+        setTimeout(resetPosition, 500);
+      }
+    });
+
+    // Swipe Gesture for Mobile
+    let touchStartX = 0;
+    timelineTrack.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    timelineTrack.addEventListener("touchend", (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      if (touchEndX - touchStartX > 50) {
+        currentIndex--;
+        updateTimeline();
+        setTimeout(resetPosition, 500);
+      } else if (touchStartX - touchEndX > 50) {
+        currentIndex++;
+        updateTimeline();
+        setTimeout(resetPosition, 500);
+      }
+    });
+
+    // Initial position in the middle set
+    updateTimeline(false);
+  }
+});
