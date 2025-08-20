@@ -616,7 +616,7 @@ document.addEventListener("click", (event) => {
   }
 });
 
-// ---------------------------
+// timeline start
 
 const timelineData = [
   {
@@ -641,7 +641,7 @@ const timelineData = [
     title: "კვანტური გამოთვლები",
     description:
       "პირველი კომერციული კვანტური კომპიუტერები ხელმისაწვდომი ხდება.",
-    icon: "https://img.icons8.com/ios-filled/50/ffffff/quantum.png",
+    icon: "https://img.icons8.com/ios-filled/50/ffffff/circled.png",
   },
   {
     year: 2032,
@@ -790,3 +790,94 @@ document.addEventListener("DOMContentLoaded", () => {
     updateTimeline(false);
   }
 });
+
+// gridCanvas start
+
+const canvas = document.getElementById("gridCanvas");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+const gridSize = 35;
+const lineColor = "rgba(79, 209, 197, 0.3)";
+const glowColor = "rgba(79, 209, 197, 0.5)";
+let mouseX = 0;
+let mouseY = 0;
+
+const particles = [];
+for (let i = 0; i < 15; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    vx: (Math.random() - 0.5) * 0.5,
+    vy: (Math.random() - 0.5) * 0.5,
+    opacity: 0.3 + Math.random() * 0.2,
+  });
+}
+
+function drawGrid() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw grid lines with glow effect
+  ctx.strokeStyle = lineColor;
+  ctx.lineWidth = 1;
+
+  // Vertical lines
+  for (let x = 0; x <= canvas.width; x += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.globalAlpha = 0.3 + Math.sin(Date.now() * 0.001 + x * 0.02) * 0.1;
+    ctx.stroke();
+  }
+
+  // Horizontal lines
+  for (let y = 0; y <= canvas.height; y += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.globalAlpha = 0.3 + Math.sin(Date.now() * 0.001 + y * 0.02) * 0.1;
+    ctx.stroke();
+  }
+
+  // Draw particles for extra dynamism
+  ctx.fillStyle = glowColor;
+  particles.forEach((p) => {
+    ctx.globalAlpha = p.opacity;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Update particle position
+    p.x += p.vx + (mouseX - canvas.width / 2) * 0.0001;
+    p.y += p.vy + (mouseY - canvas.height / 2) * 0.0001;
+
+    // Bounce off edges
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+    // Vary opacity
+    p.opacity = 0.7 + Math.sin(Date.now() * 0.002) * 0.8;
+  });
+
+  ctx.globalAlpha = 1;
+}
+
+function animate() {
+  drawGrid();
+  requestAnimationFrame(animate);
+}
+
+canvas.addEventListener("mousemove", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  mouseX = e.clientX - rect.left;
+  mouseY = e.clientY - rect.top;
+});
+
+animate();
