@@ -1,0 +1,200 @@
+:root {
+  --primary-bg-color: #1a202c;
+  --secondary-bg-color: #2d3748;
+  --accent-color-1: #4fd1c5;
+  --accent-color-2: #81e6d9;
+  --card-bg: rgba(26, 32, 44, 0.5);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --light-text-color: #e2e8f0;
+  --hover-bg: rgba(79, 209, 197, 0.1);
+  --modal-bg: rgba(26, 32, 44, 0.9);
+}
+
+body.light {
+  --primary-bg-color: #f0f4f8;
+  --secondary-bg-color: #ffffff;
+  --accent-color-1: #0d9488;
+  --accent-color-2: #14b8a6;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --border-color: rgba(0, 0, 0, 0.1);
+  --light-text-color: #1f2937;
+  --hover-bg: rgba(20, 184, 166, 0.1);
+  --modal-bg: rgba(255, 255, 255, 0.9);
+}
+
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-color-1) var(--secondary-bg-color);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: linear-gradient(
+    135deg,
+    var(--primary-bg-color) 0%,
+    var(--secondary-bg-color) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--light-text-color);
+  padding-top: 80px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.tabs-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
+}
+
+.tabs {
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: 2.5rem;
+  max-width: 1140px; /* Set to 1140px as requested */
+  width: 100%; /* Takes full available width up to max-width */
+  margin-left: auto;
+  margin-right: auto; /* Center the tabs container */
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 0.85rem 1.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--light-text-color);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  flex: 1; /* Makes tabs equal width */
+  text-align: center;
+  border-radius: 8px 8px 0 0; /* Rounded top corners */
+}
+
+.tab:hover {
+  background: var(--hover-bg);
+  transform: scale(1.02); /* Subtle scale effect on hover */
+}
+
+.tab.active {
+  color: var(--accent-color-1);
+  background: var(--card-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle elevation */
+}
+
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px; /* Slightly thicker for emphasis */
+  background: var(--accent-color-1);
+  transition: background 0.3s ease;
+}
+
+.tab-content {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease; /* Smooth transition for background changes */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+}
+
+.content {
+  display: none;
+  animation: fadeIn 0.6s ease-in-out;
+  max-width: 1140px; /* Set to 1140px as requested */
+  margin: 0 auto; /* Center content horizontally */
+  text-align: center; /* Center text within content */
+}
+
+.content.active {
+  display: block;
+}
+
+.content h2 {
+  margin-top: 0;
+  font-size: 2rem; /* Larger for better hierarchy */
+  font-weight: 700;
+  color: var(--accent-color-1);
+  margin-bottom: 1rem;
+}
+
+.content p {
+  font-size: 1.1rem; /* Slightly larger for readability */
+  line-height: 1.8;
+  color: var(--light-text-color);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .tabs-container {
+    padding: 0 1rem;
+    margin: 1.5rem auto;
+  }
+
+  .tabs {
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 100%; /* Full width on mobile */
+  }
+
+  .tab {
+    padding: 0.75rem 1rem;
+    font-size: 1.05rem;
+    font-weight: 500;
+    flex: none; /* Reverts to default width on mobile */
+    text-align: center;
+    border-radius: 8px; /* Full radius on mobile for consistency */
+  }
+
+  .tab-content {
+    padding: 1.75rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .content {
+    max-width: 100%; /* Full width on mobile */
+  }
+
+  .content h2 {
+    font-size: 1.75rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}

@@ -8,7 +8,7 @@ class HeaderComponent {
       <header class="header">
         <div class="header-container">
           <div class="logo-container">
-            <h1 class="header-title">ციფრული მომავალი</h1>
+            <img src="${basePath}images/logo.png" class="image" />
           </div>
           <div class="burger-menu" onclick="window.HeaderComponent.toggleBurgerMenu()">
             <svg
@@ -47,6 +47,8 @@ class HeaderComponent {
             <nav class="navigation">
               <!-- Removed SPA navigation, using simple links -->
               <a href="${basePath}dashboard.html" class="nav-link">მთავარი</a>
+              <a href="${basePath}pages/about.html" class="nav-link">ჩვენს შესახებ</a>
+              <a href="${basePath}pages/service.html" class="nav-link">სერვისი</a>
               <a href="${basePath}pages/profile.html" class="nav-link">პროფილი</a>
               <a href="${basePath}pages/settings.html" class="nav-link">პარამეტრები</a>
             </nav>
@@ -157,6 +159,8 @@ class HeaderComponent {
             <nav class="navigation-mobile">
               <!-- Removed SPA navigation from mobile menu -->
               <a href="${basePath}dashboard.html" class="nav-link">მთავარი</a>
+              <a href="${basePath}pages/about.html" class="nav-link">ჩვენს შესახებ</a>
+              <a href="${basePath}pages/service.html" class="nav-link">სერვისი</a>
               <a href="${basePath}pages/profile.html" class="nav-link">პროფილი</a>
               <a href="${basePath}pages/settings.html" class="nav-link">პარამეტრები</a>
             </nav>
@@ -367,6 +371,16 @@ class HeaderComponent {
       } else if (
         currentPath.includes("/pages/settings.html") &&
         linkPath.includes("/pages/settings.html")
+      ) {
+        link.classList.add("active");
+      } else if (
+        currentPath.includes("/pages/about.html") &&
+        linkPath.includes("/pages/about.html")
+      ) {
+        link.classList.add("active");
+      } else if (
+        currentPath.includes("/pages/service.html") &&
+        linkPath.includes("/pages/service.html")
       ) {
         link.classList.add("active");
       }
